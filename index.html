@@ -1,17 +1,42 @@
-<style>
-
-</style>
+<script>
+	var check = function() {
+  if (document.getElementById('password').value ==
+    document.getElementById('confirm_password').value) {
+    document.getElementById('message').style.color = 'green';
+    document.getElementById('message').innerHTML = 'matching';
+  } else {
+    document.getElementById('message').style.color = 'red';
+    document.getElementById('message').innerHTML = 'not matching';
+  }
+}
+</script>
 
 <html>  
 <body>  
  
 <form action="/controllers/register-controller" method="POST">  
-Full Name: <input type="text" name="name">  
-   
-E-mail: <input type="text" name="email">
-Pasword: <input type="password" name="password">
-   
-<input type="submit" value="Submit">  
+
+First Name <input type="text" name="Fname" required>
+<br>
+Last Name <input type="text" name="Lname" required> 
+<br>
+UserName <input type="text" name="Username" required> 
+<br>
+E-mail <input type="email" name="email" required>
+<br>
+Phone <input type="tel" pattern='^\+?\d{0,13}' name="phone" required>
+<br>
+Date of Birth <input type="date" data-date-inline-picker="true" name="DOB" required>
+<br>
+
+Password <input name="password" id="password" type="password" onkeyup='check();' />
+<br>
+Confirm Password <input type="password" name="confirm_password" id="confirm_password"  onkeyup='check();' /> 
+<span id='message'></span>	
+<br>
+<br>
+
+<input type="submit" value="Submit">
 </form>
 </body>  
 </html>

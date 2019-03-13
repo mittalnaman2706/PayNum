@@ -1,5 +1,5 @@
 var Cryptr = require('cryptr');
-cryptr = new Cryptr('myTotalySecretKey');
+cryptr = new Cryptr('myTotallySecretKey');
  
 var connection = require('./../config');
 module.exports.authenticate=function(req,res){
@@ -9,6 +9,7 @@ module.exports.authenticate=function(req,res){
    
     connection.query('SELECT * FROM user WHERE email = ?',[email], function (error, results, fields) {
       if (error) {
+        
           res.json({
             status:false,
             message:'there are some error with query'
