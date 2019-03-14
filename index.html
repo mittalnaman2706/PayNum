@@ -1,5 +1,5 @@
 <script>
-	var check = function() {
+  var check = function() {
   if (document.getElementById('password').value ==
     document.getElementById('confirm_password').value) {
     document.getElementById('message').style.color = 'green';
@@ -10,8 +10,10 @@
   }
 }
 </script>
-
 <html>  
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+	</head>
 <body>  
  
 <form action="/controllers/register-controller" method="POST">  
@@ -28,10 +30,10 @@ Phone <input type="tel" pattern='^\+?\d{0,13}' name="phone" required>
 <br>
 Date of Birth <input type="date" data-date-inline-picker="true" name="DOB" required>
 <br>
-
-Password <input name="password" id="password" type="password" onkeyup='check();' />
+<label for="password">Password</label>
+<input name="password" id="password" type="password" required onkeyup='check();' />
 <br>
-Confirm Password <input type="password" name="confirm_password" id="confirm_password"  onkeyup='check();' /> 
+Confirm Password <input type="password" name="confirm_password" id="confirm_password"  requiresonkeyup='check();' /> 
 <span id='message'></span>	
 <br>
 <br>
