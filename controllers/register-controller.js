@@ -4,16 +4,18 @@ var connection = require('./../config');
 // cryptr = new Cryptr('myTotalySecretKey');
  
 module.exports.register=function(req,res){
-    var today = new Date();
+    // var today = new Date();
     var encryptedString = cryptr.encrypt(req.body.password);
     var user={
-        "name":req.body.name,
-        "email":req.body.email,
-        "password":encryptedString,
-        "created_at":today,
-        "updated_at":today
+        "FName":req.body.Fname,
+        "LName":req.body.Lname,
+        "Password":encryptedString,
+        "E_Mail":req.body.email,
+        "Phone":req.body.phone,
+        "DOB":req.body.DOB,
+        "UserName":req.body.Username,
     }
-    connection.query('INSERT INTO user SET ?',user, function (error, results, fields) {
+    connection.query('INSERT INTO users SET ?',user, function (error, results, fields) {
       if (error) {
         console.log(error);
         res.json({

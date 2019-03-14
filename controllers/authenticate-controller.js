@@ -3,13 +3,13 @@ cryptr = new Cryptr('myTotallySecretKey');
  
 var connection = require('./../config');
 module.exports.authenticate=function(req,res){
-    var email=req.body.email;
+    var username=req.body.username;
     var password=req.body.password;
    
    
-    connection.query('SELECT * FROM user WHERE email = ?',[email], function (error, results, fields) {
+    connection.query('SELECT * FROM users WHERE username = ?',[username], function (error, results, fields) {
       if (error) {
-        
+        console.log(error);
           res.json({
             status:false,
             message:'there are some error with query'
@@ -27,7 +27,7 @@ module.exports.authenticate=function(req,res){
             }else{
                 res.json({
                   status:false,
-                  message:"Email and password does not match"
+                  message:"Username and password does not match"
                  });
             }
           
