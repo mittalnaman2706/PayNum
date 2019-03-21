@@ -9,6 +9,8 @@
   "author": "naman_mittal",
   "license": "ISC",
   "dependencies": {
-    "cryptr": "^4.0.2"
+    "cryptr": "^4.0.2",
+    "express-session": "^1.15.6",
+    "siege": "^0.2.0"
   }
 }
