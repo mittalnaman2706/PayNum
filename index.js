@@ -7,7 +7,6 @@ cryptr = new Cryptr('myTotalySecretKey');
 var connection = require('./config');
 var app = express();
 
-var authenticateController=require('./controllers/authenticate-controller');
 var registerController=require('./controllers/register-controller');
  
 app.use(session({
@@ -27,7 +26,7 @@ app.post('/logout', function(req, res, next) {
 
 app.get('/home', function (req, res) {  
 	if(req.session.loggedin) {
-		res.sendFile('C:/Users/Naman Mittal/Desktop/PayNum/home.html');
+		res.sendFile(__dirname + '/home.html');
 		// res.send('Welcome back, ' + req.session.username + '!');
 	}
 	else{
@@ -40,11 +39,37 @@ app.get('/', function(req,res){
 	res.sendFile(__dirname + '/login.html');
 });
 
+// app.get('/done', function(req,res){
+// 	console.log(req.password);
+// 	res.json({
+// 		username: res.username,
+// 		Password: res.password
+// 	});
+// });
+
+app.get('/forgot-pass', function(req,res){
+	res.sendFile(__dirname + '/forgot-pass.html');
+});
+
 app.get('/Sign-Up', function(req,res){
 	res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/controllers/register-controller', registerController.register);
+
+app.post('/forgot', function(req, res) {
+
+	var username = req.body.username;
+    connection.query('SELECT * FROM users WHERE username = ?',[username], function (error, results, fields) {
+	if(results.length > 0){
+        Password = cryptr.decrypt(results[0].Password);
+        res.send('Your Password is ' + Password);
+	}	
+	else{
+		res.send('Wrong Username');
+	}
+	});
+});
 
 app.post('/auth', function(req, res) {	
 	var username=req.body.username;
