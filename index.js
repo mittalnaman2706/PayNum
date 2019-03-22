@@ -1,3 +1,4 @@
+var nodemailer = require('nodemailer');
 var express=require("express");
 var bodyParser=require('body-parser');
 var session = require('express-session');
@@ -6,6 +7,15 @@ cryptr = new Cryptr('myTotalySecretKey');
 
 var connection = require('./config');
 var app = express();
+
+var from = 'paynum.group@gmail.com';
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: from,
+    pass: '**********' 			//Write your password here
+  }
+});
 
 var registerController=require('./controllers/register-controller');
  
@@ -38,14 +48,6 @@ app.get('/', function(req,res){
 	res.sendFile(__dirname + '/login.html');
 });
 
-// app.get('/done', function(req,res){
-// 	console.log(req.password);
-// 	res.json({
-// 		username: res.username,
-// 		Password: res.password
-// 	});
-// });
-
 app.get('/forgot-pass', function(req,res){
 	res.sendFile(__dirname + '/forgot-pass.html');
 });
@@ -61,8 +63,23 @@ app.post('/forgot', function(req, res) {
 	var username = req.body.username;
     connection.query('SELECT * FROM users WHERE username = ?',[username], function (error, results, fields) {
 	if(results.length > 0){
-        Password = cryptr.decrypt(results[0].Password);
-        res.send('Your Password is ' + Password);
+        var Password = cryptr.decrypt(results[0].Password);
+        var EMail = results[0].E_Mail;
+        var mailOptions = {
+		from: from,
+		to: EMail,
+		subject: 'Forgot Password Paynum',
+		text: 'Your password is recovered: ' + Password
+		};
+
+		transporter.sendMail(mailOptions, function(error, info){
+		  if (error) {
+		    console.log(error);
+		  } else {
+		    console.log('Email sent: ' + info.response);
+		  }
+		});
+		res.send('Your Password has been mailed to <a onclick="myFunction()" href="/">' + EMail + '</a>');
 	}	
 	else{
 		res.send('Wrong Username');

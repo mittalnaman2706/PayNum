@@ -1,17 +1,19 @@
 var nodemailer = require('nodemailer');
 
+var toMail = ;
+
 var from = 'paynum.group@gmail.com';
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '********'
+    pass: '********' 			//Write your password here
   }
 });
 
 var mailOptions = {
   from: from,
-  to: 'parassharma8041@gmail.com,namanmittal040@gmail.com',
+  to: toMail,
   subject: 'Sending Email using Node.js',
   // text: 'Test E-mail!'
   html: '<h1>Welcome</h1><p>That was easy!</p>'

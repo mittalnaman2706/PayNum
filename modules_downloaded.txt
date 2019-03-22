@@ -1,3 +1,4 @@
 express
 express-session
-nodemailer xoauth2
+nodemailer
+popups
