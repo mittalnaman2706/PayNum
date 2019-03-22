@@ -7,7 +7,6 @@ cryptr = new Cryptr('myTotalySecretKey');
 var connection = require('./config');
 var app = express();
 
-
 var authenticateController=require('./controllers/authenticate-controller');
 var registerController=require('./controllers/register-controller');
  
@@ -20,15 +19,22 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
+app.get('/logout', function(req, res, next) {
+	req.session.destroy();
+	console.log('Logout successful !');
+	res.redirect('/');
+});
+
 app.get('/home', function (req, res) {  
-	// if(req.session.loggedin) {
+	if(req.session.loggedin) {
+		// res.sendFile(__dirname + '/home.html');
 		res.send('Welcome back, ' + req.session.username + '!');
-	// }
-	// else{
-		// res.send('Please login to view this page');
-	// }
+	}
+	else{
+		res.send('Please login to view this page');
+	}
 	res.end();
-})  
+});  
 
 
 app.get('/', function(req,res){
@@ -36,9 +42,29 @@ app.get('/', function(req,res){
 });
 
 app.post('/controllers/register-controller', registerController.register);
-app.post('/controllers/authenticate-controller', authenticateController.authenticate);
 
+app.post('/auth', function(req, res) {	
+	var username=req.body.username;
+    var password=req.body.password;
+    connection.query('SELECT * FROM users WHERE username = ?',[username], function (error, results, fields) {
+        if(results.length >0){
+            decryptedString = cryptr.decrypt(results[0].Password);
+            if(password == decryptedString){
+               
+               req.session.loggedin = true;
+               req.session.username=username;
+               res.redirect('/home');
+            }
+            else{
+	    		res.send('Username and/or password Incorrect !!!');
+            }
+        }
+       	else{
+    		res.send('Username and/or password Incorrect !!!');
+ 	   	}
+ 	   });
+});
 
 app.listen(3000, '0.0.0.0', function() {
 	console.log('Hosting started...');
-})
+});
