@@ -19,7 +19,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-app.get('/logout', function(req, res, next) {
+app.post('/logout', function(req, res, next) {
 	req.session.destroy();
 	console.log('Logout successful !');
 	res.redirect('/');
@@ -27,18 +27,21 @@ app.get('/logout', function(req, res, next) {
 
 app.get('/home', function (req, res) {  
 	if(req.session.loggedin) {
-		// res.sendFile(__dirname + '/home.html');
-		res.send('Welcome back, ' + req.session.username + '!');
+		res.sendFile('C:/Users/Naman Mittal/Desktop/PayNum/home.html');
+		// res.send('Welcome back, ' + req.session.username + '!');
 	}
 	else{
 		res.send('Please login to view this page');
 	}
-	res.end();
+	// res.end();
 });  
-
 
 app.get('/', function(req,res){
 	res.sendFile(__dirname + '/login.html');
+});
+
+app.get('/Sign-Up', function(req,res){
+	res.sendFile(__dirname + '/index.html');
 });
 
 app.post('/controllers/register-controller', registerController.register);
