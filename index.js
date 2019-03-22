@@ -32,7 +32,6 @@ app.get('/home', function (req, res) {
 	else{
 		res.send('Please login to view this page');
 	}
-	// res.end();
 });  
 
 app.get('/', function(req,res){
