@@ -1,5 +1,12 @@
-<h1>Welcome User </h1>
+<script type="text/javascript">
+var s = require('./index.js');
+console.log(s);
+var uname = s.uname;
+// document.getElementById("qq").innerHTML ='Welcome '+ s.uname;
+</script>
 
-<form action="logout" method="POST">  
- 
-<input type="submit" value="Logout">  
+<h1>
+Welcome <script type="text/javascript">document.write(uname);</script>
+</h1>
+<form action="logout" method="POST"> 
+<input type="submit" value="Logout">

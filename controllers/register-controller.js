@@ -9,7 +9,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '******'           //Write your password here
+    pass: '***********'           //Write your password here
   }
 });
 
@@ -26,6 +26,23 @@ module.exports.register=function(req,res){
         "DOB":req.body.DOB,
         "UserName":req.body.Username,
     }
+    var uname = req.body.Username;
+    connection.query('SELECT * FROM users WHERE username = ?',[req.body.Username], function (error, results, fields) {
+        if(results.length > 0){
+            res.send('<h1>Username '+uname+' not available !<br>Click <a href="/Sign-Up">here</a> to register again.');
+        }
+    else{
+        connection.query('SELECT * FROM users WHERE E_Mail = ?',[req.body.email], function (error, results, fields) {
+        if(results.length > 0){
+            res.send('<h1>Email already registered !<br>Click <a href="/">here</a> to login.');
+        }
+        else{
+    connection.query('SELECT * FROM users WHERE Phone = ?',[req.body.phone], function (error, results, fields) {
+        if(results.length > 0){
+            res.send('<h1>Phone already registered !<br>Click <a href="/">here</a> to login.');
+        }
+        else{
+
     connection.query('INSERT INTO users SET ?',user, function (error, results, fields) {
       if (error) {
         console.log(error);
@@ -53,8 +70,16 @@ module.exports.register=function(req,res){
           }
         });
 
-        res.send('<h1>Registraion successful !<br>Click <a href="/">here</a> to login.');
-      });
+        res.send('<h1>Registration successful !<br>Click <a href="/">here</a> to login.');
+      });            
+        }
+    });
+    }
+});
+
+    }
+    }); 
+
     }
     });
 }

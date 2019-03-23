@@ -13,7 +13,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '*********' 			//Write your password here
+    pass: '***********' 			//Write your password here
   }
 });
 
@@ -98,6 +98,7 @@ app.post('/auth', function(req, res) {
                
                req.session.loggedin = true;
                req.session.username=username;
+               module.exports.uname = username;
                res.redirect('/home');
             }
             else{
