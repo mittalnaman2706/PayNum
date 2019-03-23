@@ -1,10 +1,21 @@
+var nodemailer = require('nodemailer');
 var Cryptr = require('cryptr');
 var express=require("express");
 var connection = require('./../config');
 cryptr = new Cryptr('myTotalySecretKey');
  
+var from = 'paynum.group@gmail.com';
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: from,
+    pass: '******'           //Write your password here
+  }
+});
+
 module.exports.register=function(req,res){
     // var today = new Date();
+    var EMail = req.body.email;
     var encryptedString = cryptr.encrypt(req.body.password);
     var user={
         "FName":req.body.Fname,
@@ -23,11 +34,27 @@ module.exports.register=function(req,res){
             message:'there are some error with query'
         })
       }else{
-          res.json({
-            status:true,
-            // data:results,
-            message:'user registered sucessfully'
-        })
-      }
+
+        connection.query('SELECT * FROM users WHERE username = ?',[req.body.Username], function (error, results, fields) {
+        var acc = results[0].Account_Number;
+        var bal = 1000;
+        var mailOptions = {
+        from: from,
+        to: EMail,
+        subject: 'Congrats! Account created successfully.',
+        html: '<h1>Welcome ' + req.body.Username+',</h1><br><h2>Your account number is:' + acc + '</h1><br><h3>Default Balance: '+bal+'</h3>'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent !');
+          }
+        });
+
+        res.send('<h1>Registraion successful !<br>Click <a href="/">here</a> to login.');
+      });
+    }
     });
 }

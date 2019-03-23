@@ -13,7 +13,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '**********' 			//Write your password here
+    pass: '*********' 			//Write your password here
   }
 });
 
@@ -65,10 +65,11 @@ app.post('/forgot', function(req, res) {
 	if(results.length > 0){
         var Password = cryptr.decrypt(results[0].Password);
         var EMail = results[0].E_Mail;
+
         var mailOptions = {
 		from: from,
 		to: EMail,
-		subject: 'Forgot Password Paynum',
+		subject: 'NO REPLY: Forgot Password Paynum',
 		text: 'Your password is recovered: ' + Password
 		};
 
@@ -76,7 +77,7 @@ app.post('/forgot', function(req, res) {
 		  if (error) {
 		    console.log(error);
 		  } else {
-		    console.log('Email sent: ' + info.response);
+		    console.log('Email sent !');
 		  }
 		});
 		res.send('Your Password has been mailed to <a onclick="myFunction()" href="/">' + EMail + '</a>');
