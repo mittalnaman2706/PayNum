@@ -7,6 +7,7 @@ cryptr = new Cryptr('myTotalySecretKey');
 
 var connection = require('./config');
 var app = express();
+app.set('view engine', 'ejs');
 
 var from = 'paynum.group@gmail.com';
 var transporter = nodemailer.createTransport({
@@ -36,8 +37,7 @@ app.post('/logout', function(req, res, next) {
 
 app.get('/home', function (req, res) {  
 	if(req.session.loggedin) {
-		res.sendFile(__dirname + '/home.html');
-		// res.send('Welcome back, ' + req.session.username + '!');
+		res.render('home', {name:req.session.name, username:req.session.username});
 	}
 	else{
 		res.send('Please login to view this page');
@@ -46,6 +46,13 @@ app.get('/home', function (req, res) {
 
 app.get('/', function(req,res){
 	res.sendFile(__dirname + '/login.html');
+});
+
+app.get('/profile', function(req,res){
+	var date = req.session.dob;
+	date=date.substring(0, 10);
+	res.render('profile', {username:req.session.username, phone:req.session.phone, 
+		dob:date, email:req.session.email, bal:req.session.bal, name:req.session.name, accno:req.session.accno, });
 });
 
 app.get('/forgot-pass', function(req,res){
@@ -98,6 +105,13 @@ app.post('/auth', function(req, res) {
                
                req.session.loggedin = true;
                req.session.username=username;
+               req.session.name = results[0].FName +' '+ results[0].LName;
+               req.session.dob = results[0].DOB;
+               req.session.bal = results[0].amount;
+               req.session.accno = results[0].Account_Number;
+               req.session.email = results[0].E_Mail;
+               req.session.phone = results[0].Phone;
+               
                module.exports.uname = username;
                res.redirect('/home');
             }
