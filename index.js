@@ -14,7 +14,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '***********' 			//Write your password here
+    pass: '**********' 			//Write your password here
   }
 });
 
@@ -46,6 +46,29 @@ app.get('/home', function (req, res) {
 
 app.get('/', function(req,res){
 	res.sendFile(__dirname + '/login.html');
+});
+
+
+app.get('/pay', function(req, res){
+	var bal = req.session.bal;
+	res.send("<h2>Available Balance = "+ bal+"</h2><h1>This feature will be available soon !</h1>")
+});
+
+app.get('/passbook', function(req,res){
+
+	var bal = req.session.bal;
+	var acc = req.session.accno;
+	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
+
+		if(results.length>0){
+			res.send("<h1>This feature will be available soon !</h1>");
+		}
+		else{
+			res.send("<h2>Available Balance = "+ bal+"</h2><br><h2>No transactions are done from/to your account</h2>");
+		}
+
+	});
+	// res.sendFile('passbook', {name:req.session.name, username:req.session.username});
 });
 
 app.get('/profile', function(req,res){
