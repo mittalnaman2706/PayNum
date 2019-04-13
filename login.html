@@ -31,7 +31,11 @@ ul.topnav li a {
 
 ul.topnav li a:hover:not(.active) {background-color: #111;}
 
-ul.topnav li a.active {background-color: #4CAF50;}
+ul.topnav li a.active {
+    font-color :white;
+    font-size :20px; 
+    background-color: #232899;
+}
 
 ul.topnav li.right {float: right;}
 
@@ -52,8 +56,8 @@ ul.topnav li.right {float: right;}
   max-width:320px;
   width:90%;
   background-color:#FFFFFF;
-  padding:40px;
-  border-radius:4px;
+  padding:34px;
+  border-radius:25px;
   transform:translate(-50%, -50%);
   position:absolute;
   top:50%;
@@ -98,9 +102,9 @@ ul.topnav li.right {float: right;}
 .login-dark form .forgot {
   display:block;
   text-align:center;
-  font-size:12px;
-  color:#6f7a85;
-  opacity:0.9;
+  font-size:14px;
+  color:#8A8DD4;
+  opacity:1;
   text-decoration:none;
 }
 
@@ -113,6 +117,10 @@ ul.topnav li.right {float: right;}
   transform:translateY(1px);
 }
 
+#check {
+  text-align: center;
+  color: black;
+}
 
 </style>
 </head>
@@ -126,7 +134,7 @@ ul.topnav li.right {float: right;}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <ul class="topnav">
-  <li><a class="active" href="/">Home</a></li>
+  <li><a class="active" href="/">Paynum</a></li>
   <li><a href="#news">News</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="/about">About</a></li>
@@ -138,7 +146,7 @@ ul.topnav li.right {float: right;}
 
     <div class="login-dark">
         <form method="post" action="auth">
-            <h2 class="sr-only">Login Form</h2>
+            <h3 id="check">Login Form</h3>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
             
             <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Username" required></div>

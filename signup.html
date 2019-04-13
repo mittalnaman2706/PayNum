@@ -47,8 +47,11 @@ ul.topnav li a {
 
 ul.topnav li a:hover:not(.active) {background-color: #111;}
 
-ul.topnav li a.active {background-color: #4CAF50;}
-
+ul.topnav li a.active {
+    font-color :white;
+    font-size :20px; 
+    background-color: #232899;
+}
 ul.topnav li.right {float: right;}
 
 @media screen and (max-width: 600px) {
@@ -99,8 +102,8 @@ button:hover {
 </style>
 <body>  
 <ul class="topnav">
-  <li><a class="active" href="/">Home</a></li>
-  <li><a href="#news">News</a></li>
+  <li><a class="active" href="/">Paynum</a></li>
+<li><a href="#news">News</a></li>
   <li><a href="#contact">Contact</a></li>
   <li><a href="/about">About</a></li>
    
@@ -111,7 +114,7 @@ button:hover {
 <div id="qwe">
 <form action="/controllers/register-controller" method="POST">  
 <table border="1" cellpadding="4" cellspacing="1">
-    <h1>Sign Up</h1>
+  <u> <i> <h1>Sign Up</h1></i></u>
 	<div>
     <tr><td>
 		First Name: 
@@ -129,7 +132,7 @@ button:hover {
     <tr><td>
 		Username: 
         </td><td>
-		<input type="text" placeholder="Ex. John_123" name="Username" required>
+		<input type="text" placeholder="Ex. john_123" name="Username" required>
         </td>
     </tr>
 
