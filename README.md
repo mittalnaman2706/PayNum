@@ -1,6 +1,7 @@
 # PayNum
-Online banking System
+Online Wallet
 
-Bank Management Website with all new and advanced features to manage the details of Account, Internet Banking, Transactions, Statement and Feedback.
+A Website with all new and advanced features to manage the details of Account, Transactions, Statement and Feedback.
+Similar to paytm
 
 * Project is in development stage.
