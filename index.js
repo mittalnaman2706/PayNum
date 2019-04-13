@@ -62,7 +62,7 @@ app.get('/', function(req,res){
 
 app.get('/paypage', function(req, res){
 	if(req.session.loggedin) {
-		res.render('pay');
+		res.render('pay', {name:req.session.name, username:req.session.username});
 	}
 	else{
 		res.send('Please <a href=\"/login\">login</a> to view this page');
