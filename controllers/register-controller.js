@@ -9,7 +9,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '***********'           //Write your password here
+    pass: '******'           //Write your password here
   }
 });
 
@@ -34,12 +34,12 @@ module.exports.register=function(req,res){
     else{
         connection.query('SELECT * FROM users WHERE E_Mail = ?',[req.body.email], function (error, results, fields) {
         if(results.length > 0){
-            res.send('<h1>Email already registered !<br>Click <a href="/">here</a> to login.');
+            res.send('<h1>Email already registered !<br>Click <a href="/Sign-Up">here</a> to register again.');
         }
         else{
     connection.query('SELECT * FROM users WHERE Phone = ?',[req.body.phone], function (error, results, fields) {
         if(results.length > 0){
-            res.send('<h1>Phone already registered !<br>Click <a href="/">here</a> to login.');
+            res.send('<h1>Phone already registered !<br>Click <a href="/Sign-Up">here</a> to register again.');
         }
         else{
 
@@ -70,7 +70,7 @@ module.exports.register=function(req,res){
           }
         });
 
-        res.send('<h1>Registration successful !<br>Click <a href="/">here</a> to login.');
+        res.send('<h1>Registration successful !<br>Click <a href="/login">here</a> to login.');
       });            
         }
     });

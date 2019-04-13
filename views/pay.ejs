@@ -62,22 +62,16 @@ body {
 
 </ul>
 
-    <h1>
-       Welcome <%= name%>
-    </h1>
+<form action="pay" method="POST">
 
-    <h2>
-      <a href="/profile">Profile</a>
-      <br>
-      <a href="/home">Change Password</a>
-      <br>
-      <a href="/paypage">Pay</a>
-        <br>
-        <a href="/passbook">Passbook</a>
-      <br>
-        <a href="/home">Add Money</a>
+	<input type="number" min="100000" max="199999" placeholder="Sender account" name="senderno" required>
+	<br>
+	<input type="number" placeholder="Amount" min="1" max="99999" name="amt" required>
 
-</h2>
+
+	<input type="submit" color="blue" value="submit">
+</form>
 
 </body>
 </html> 
+

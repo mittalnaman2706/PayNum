@@ -1,5 +1,4 @@
 var mysql = require('mysql');
-// var connection = mysql.createConnection({multipleStatements: true});
 var connection = mysql.createConnection({
 
 	multipleStatements: true,
@@ -7,7 +6,6 @@ var connection = mysql.createConnection({
 	user     : 'root',
 	password : '',
 	database : 'paynum'
-
 });
 
 connection.connect(function(err){

@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <head><title>Dashboard</title></head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body {margin: 0;}
@@ -28,24 +27,16 @@ ul.topnav li a {
 
 ul.topnav li a:hover:not(.active) {background-color: #111;}
 
-ul.topnav li a.active {
-  font-color :white;
-  font-size :25px;
-  background-color: #000000;
-}
+ul.topnav li a.active {background-color: #4CAF50;}
 
-ul.topnav li.right {
-  font-size: 20px;
-  align-content: bottom;
-  float: right;
-}
+ul.topnav li.right {float: right;}
 
 @media screen and (max-width: 600px) {
   ul.topnav li.right, 
   ul.topnav li {float: none;}
 }
 body {
-  /*background: url("images/dashboard.jpg");*/
+  background: url("images/img.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height : 100%;
@@ -56,28 +47,16 @@ body {
 </head>
 <body>
 <ul class="topnav">
-  <li><a class="active" href="#">Paynum</a></li>
+  <li><a class="active" href="/">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="/about">About</a></li>
    
-  <li class="right"><a href="/logout">Logout</a></li>
+  <li class="right"><a href="/sign-up">Signup</a></li>
+  <li class="right"><a href="/login">Login</a></li>
 
 </ul>
 
-    <h1>
-       Welcome <%= name%>
-    </h1>
-
-    <h2>
-      <a href="/profile">Profile</a>
-      <br>
-      <a href="/home">Change Password</a>
-      <br>
-      <a href="/paypage">Pay</a>
-        <br>
-        <a href="/passbook">Passbook</a>
-      <br>
-        <a href="/home">Add Money</a>
-
-</h2>
 
 </body>
-</html> 
+</html>

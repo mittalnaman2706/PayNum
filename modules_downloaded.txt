@@ -1,4 +1,0 @@
-express
-express-session
-nodemailer
-popups

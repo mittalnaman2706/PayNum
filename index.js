@@ -7,14 +7,16 @@ cryptr = new Cryptr('myTotalySecretKey');
 
 var connection = require('./config');
 var app = express();
+
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname+'/public'));        // Needed to ope n background image in 'sendFile'
 
 var from = 'paynum.group@gmail.com';
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '**********' 			//Write your password here
+    pass: '********' 			//Write your password here
   }
 });
 
@@ -29,33 +31,61 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-app.post('/logout', function(req, res, next) {
+app.get('/logout', function(req, res, next) {
 	req.session.destroy();
 	console.log('Logout successful !');
 	res.redirect('/');
 });
+
 
 app.get('/home', function (req, res) {  
 	if(req.session.loggedin) {
 		res.render('home', {name:req.session.name, username:req.session.username});
 	}
 	else{
-		res.send('Please login to view this page');
+		res.send("<h1>Please <a href=\"/login\">login</a> to view this page</h1>");
 	}
 });  
 
-app.get('/', function(req,res){
+app.get('/login', function(req,res){
 	res.sendFile(__dirname + '/login.html');
 });
 
+app.get('/about', function(req,res){
+	res.sendFile(__dirname + '/about.html');
+});
 
-app.get('/pay', function(req, res){
-	var bal = req.session.bal;
-	res.send("<h2>Available Balance = "+ bal+"</h2><h1>This feature will be available soon !</h1>")
+
+app.get('/', function(req,res){
+	res.sendFile(__dirname + '/main.html');
+});
+
+app.get('/paypage', function(req, res){
+	if(req.session.loggedin) {
+		res.render('pay');
+	}
+	else{
+		res.send('Please <a href=\"/login\">login</a> to view this page');
+	}
+});
+app.post('/pay', function(req, res){
+	if(req.session.loggedin) {
+		var bal = req.session.bal;
+		var pay_amount = req.body.amt;
+		if(bal >= pay_amount){
+			res.send("Done! Will be available soon");
+		}
+		else{
+			res.send("<h1>Insufficient Balance</h1>")
+		}
+	}
+	else{
+		res.send('Please <a href=\"/login\">login</a> to view this page');
+	}
 });
 
 app.get('/passbook', function(req,res){
-
+	if(req.session.loggedin) {
 	var bal = req.session.bal;
 	var acc = req.session.accno;
 	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
@@ -66,16 +96,23 @@ app.get('/passbook', function(req,res){
 		else{
 			res.send("<h2>Available Balance = "+ bal+"</h2><br><h2>No transactions are done from/to your account</h2>");
 		}
-
-	});
+		});
+	}
+	else{
+		res.send('Please <a href=\"/login\">login</a> to view this page');
+	}
 	// res.sendFile('passbook', {name:req.session.name, username:req.session.username});
 });
 
 app.get('/profile', function(req,res){
-	var date = req.session.dob;
-	date=date.substring(0, 10);
-	res.render('profile', {username:req.session.username, phone:req.session.phone, 
-		dob:date, email:req.session.email, bal:req.session.bal, name:req.session.name, accno:req.session.accno, });
+	if(req.session.loggedin) {
+		var date = req.session.dob;
+		date=date.substring(0, 10);
+		res.render('profile', {username:req.session.username, phone:req.session.phone, 	dob:date, email:req.session.email, bal:req.session.bal, name:req.session.name, accno:req.session.accno, });	
+	}
+	else{
+		res.send('Please <a href=\"/login\">login</a> to view this page');
+	}
 });
 
 app.get('/forgot-pass', function(req,res){
@@ -83,7 +120,7 @@ app.get('/forgot-pass', function(req,res){
 });
 
 app.get('/Sign-Up', function(req,res){
-	res.sendFile(__dirname + '/index.html');
+	res.sendFile(__dirname + '/signup.html');
 });
 
 app.post('/controllers/register-controller', registerController.register);

@@ -1,3 +1,67 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!DOCTYPE html>
+<html>
+<head>
+  <head><title>Dashboard</title></head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {margin: 0;}
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+
+ul.topnav li a.active {
+  font-color :white;
+  font-size :25px;
+  background-color: #000000;
+}
+
+ul.topnav li.right {
+  font-size: 20px;
+  align-content: bottom;
+  float: right;
+}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right, 
+  ul.topnav li {float: none;}
+}
+body {
+  /*background: url("images/dashboard.jpg");*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  height : 100%;
+  width : 100%;
+}
+
+</style>
+</head>
+<body>
+<ul class="topnav">
+  <li><a class="active" href="#">Paynum</a></li>
+   
+  <li class="right"><a href="/logout">Logout</a></li>
+
+</ul>
+
 <h1>
 Hello <%= name%>
 <h1>
@@ -15,3 +79,6 @@ Username = <%= username%>
 Date of Birth = <%= dob%>
 <br>
 </h2>
+
+</body>
+</html> 
