@@ -87,6 +87,33 @@ body {
   .sidenav a {font-size: 18px;}
 }
 
+#contents {
+  /*opacity: 0.01;*/
+  filter: alpha(opacity=0.01);  
+      /*float: right;*/
+  /*background: rgba(0, 151, 19, 0.1);;*/
+  opacity: 1;
+  width: 380px;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 100px;
+  padding-bottom: 200px;
+
+}
+
+.tbl tr td{
+    white-space:nowrap;
+    text-align:left;
+}
+
+.tbl {
+    background: #F2EE4A;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
 #nam {
   text-align: center;
 }
@@ -94,6 +121,7 @@ body {
 </head>
 
 <body>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <div>
 <ul class="topnav">
     <li><a class="active" href="#">Paynum</a></li>
@@ -111,13 +139,59 @@ body {
   <a href="#">Add money</a></i>
 </div>
 <div class="main">
-    <h2>
-        Username = <%= username%><br>
-        Account Number = <%= accno%><br>
-        Phone number = <%= phone%><br>
-        E-mail = <%= email%><br>
-        Date of Birth = <%= dob%><br>
-    </h2>
+    
+    <div id="contents">
+        <table class="tbl" border="0.9" cellpadding="9" cellspacing="2">
+
+         <tr>
+            <td>
+               <h2> <%= name%>
+           </h2> </td>
+        </tr>
+         <tr>
+            <td>
+                Username
+            </td>
+            <td>
+                <%= username%>            
+            </td>
+        </tr>
+         <tr>
+            <td>
+               Account Number
+            </td>
+            <td>
+                <%= accno%>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                Phone number
+            </td>
+            <td>
+                +91-<%= phone%>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                Date of birth
+            </td>
+            <td>
+                <%= dob%>
+            </td>
+        </tr>
+         <tr>
+            <td>
+                E-Mail
+            </td>
+            <td>
+                <%= email%>
+            </td>
+        </tr>
+        
+        </table>
+
+    </div>
 </div>
    
 </body>

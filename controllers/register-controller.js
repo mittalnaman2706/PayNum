@@ -9,7 +9,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '******'           //Write your password here
+    pass: '**********'           //Write your password here
   }
 });
 
@@ -59,7 +59,7 @@ module.exports.register=function(req,res){
         from: from,
         to: EMail,
         subject: 'Congrats! Account created successfully.',
-        html: '<h1>Welcome ' + req.body.Username+',</h1><br><h2>Your account number is:' + acc + '</h1><br><h3>Default Balance: '+bal+'</h3>'
+        html: '<h1>Welcome ' + req.body.Username+',</h1><br><h2>Your account number is:' + acc + '</h1><br><h3>Account Balance: 0.00</h3>'
         };
 
         transporter.sendMail(mailOptions, function(error, info){

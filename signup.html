@@ -61,10 +61,11 @@ ul.topnav li.right {float: right;}
 
 #qwe{
   float: right;
-  background-color: #FFFFFF;
+  background-color: #FDFFFF;
   opacity: 1;
-  width: 380px;
-  padding-left: 20px;
+  width: 400px;
+  /*height: 92%;*/
+  padding-left: 40px;
 }
 
 body {
@@ -75,14 +76,16 @@ body {
   width : 100%;
 }
 
-input[type=text], input[type=password] input[type=email] input[type=tel] input[type=date]{
-  width: 70%;
+input {
+
+  width: 100%;
   padding: 1px 1px;
-  margin: 8px 0;
+  margin: 7px 1px;
   display: inline-block;
-  border: 1px solid #ccc;
+  border: 1.8px solid #ccc;
   box-sizing: border-box;
 }
+
 button {
   background-color: #4CAF50;
   color: white;
@@ -99,23 +102,38 @@ button:hover {
 #btnsubmit {
   background-color: blue;
 }
-</style>
-<body>  
-<ul class="topnav">
-  <li><a class="active" href="/">Paynum</a></li>
-<li><a href="#news">News</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="/about">About</a></li>
-   
-  <li class="right"><a href="/sign-up">Signup</a></li>
-  <li class="right"><a href="/login">Login</a></li>
 
+</style>
+
+<body>  
+
+<ul class="topnav">
+  <li>
+    <a class="active" href="/">Paynum</a>
+  </li>
+  <li>
+    <a href="#news">News</a>
+  </li>
+  <li>
+    <a href="#contact">Contact</a>
+  </li>
+  <li>
+    <a href="/about">About</a>
+  </li>
+   
+  <li class="right">
+    <a href="/sign-up">Signup</a>
+  </li>
+  <li class="right">
+    <a href="/login">Login</a>
+  </li>
 </ul>
+
 <div id="qwe">
 <form action="/controllers/register-controller" method="POST">  
 <table border="1" cellpadding="4" cellspacing="1">
   <u> <i> <h1>Sign Up</h1></i></u>
-	<div>
+	<div id="tble">
     <tr><td>
 		First Name: 
         </td><td>
@@ -162,17 +180,16 @@ button:hover {
         <td>
             Password:
         </td><td>
-            <input name="password" minlength="8" id="password" placeholder="******" type="password" required>
+            <input name="password" minlength="8" id="password" placeholder="********" type="password" required>
         </td></tr>
     <tr><td>
             Confirm Password:
         </td><td>
-            <input type="password" placeholder="******" name="confirm_password" id="confirm_password">
+            <input type="password" placeholder="********" name="confirm_password" id="confirm_password">
         </td>
     </tr>
 	
 </table>	
-<br>
 <br>
 
 <button type="submit" id="btnsubmit" value="Submit">Register</button>
