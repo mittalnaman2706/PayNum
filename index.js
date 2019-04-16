@@ -48,6 +48,8 @@ app.get('/home', function (req, res) {
 });  
 
 app.get('/login', function(req,res){
+	if(req.session.loggedin)
+		req.session.destroy();
 	res.sendFile(__dirname + '/login.html');
 });
 
@@ -57,6 +59,8 @@ app.get('/about', function(req,res){
 
 
 app.get('/', function(req,res){
+	if(req.session.loggedin)
+		res.render('home', {name:req.session.name, username:req.session.username});
 	res.sendFile(__dirname + '/main.html');
 });
 
@@ -72,7 +76,10 @@ app.post('/pay', function(req, res){
 	if(req.session.loggedin) {
 		var bal = req.session.bal;
 		var pay_amount = req.body.amt;
-		if(bal >= pay_amount){
+		if(req.body.senderno==req.session.accno){
+			res.send("<h1 style=\"color:red\">Sorry, You cannot transfer to your own account!</h1>");
+		}
+		else if(bal >= pay_amount){
 			res.send("Done! Will be available soon");
 		}
 		else{
@@ -87,11 +94,13 @@ app.post('/pay', function(req, res){
 app.get('/passbook', function(req,res){
 	if(req.session.loggedin) {
 	var bal = req.session.bal;
+	console.log(bal);
 	var acc = req.session.accno;
 	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
-
+		
 		if(results.length>0){
-			res.send("<h1>This feature will be available soon !</h1>");
+			console.log(results);
+			res.render("passbook", {bal:req.session.bal, myacc:acc,name:req.session.name ,result : results});
 		}
 		else{
 			res.send("<h2>Available Balance = "+ bal+"</h2><br><h2>No transactions are done from/to your account</h2>");
@@ -108,6 +117,7 @@ app.get('/profile', function(req,res){
 	if(req.session.loggedin) {
 		var date = req.session.dob;
 		date=date.substring(0, 10);
+		// console.log(req.session.dob);
 		res.render('profile', {username:req.session.username, phone:req.session.phone, 	dob:date, email:req.session.email, bal:req.session.bal, name:req.session.name, accno:req.session.accno, });	
 	}
 	else{
@@ -120,13 +130,15 @@ app.get('/forgot-pass', function(req,res){
 });
 
 app.get('/Sign-Up', function(req,res){
+	if(req.session.loggedin)
+		req.session.destroy();
 	res.sendFile(__dirname + '/signup.html');
 });
 
 app.post('/controllers/register-controller', registerController.register);
 
 app.post('/forgot', function(req, res) {
-
+	
 	var username = req.body.username;
     connection.query('SELECT * FROM users WHERE username = ?',[username], function (error, results, fields) {
 	if(results.length > 0){
@@ -156,6 +168,9 @@ app.post('/forgot', function(req, res) {
 });
 
 app.post('/auth', function(req, res) {	
+	
+	if(req.session.loggedin)
+		req.session.destroy();
 	var username=req.body.username;
     var password=req.body.password;
     connection.query('SELECT * FROM users WHERE username = ?',[username], function (error, results, fields) {
@@ -167,6 +182,7 @@ app.post('/auth', function(req, res) {
                req.session.username=username;
                req.session.name = results[0].FName +' '+ results[0].LName;
                req.session.dob = results[0].DOB;
+               // console.log(results[0].DOB);
                req.session.bal = results[0].amount;
                req.session.accno = results[0].Account_Number;
                req.session.email = results[0].E_Mail;
@@ -176,6 +192,7 @@ app.post('/auth', function(req, res) {
                res.redirect('/home');
             }
             else{
+            	// alert('Hello');
 	    		res.send('Username and/or password Incorrect !!!');
             }
         }
