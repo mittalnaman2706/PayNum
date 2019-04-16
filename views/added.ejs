@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>
-  Home
+Add Money
 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -48,7 +48,7 @@ ul.topnav li.right {
   ul.topnav li {float: none;}
 }
 body {
-  background: url("images/dashboard.jpg");
+  /*background: url("images/dashboard.jpg");*/
   background-repeat: no-repeat;
   background-size: cover;
   height : 100%;
@@ -110,10 +110,28 @@ body {
   <a href="/profile">Profile</a>
   <a href="/paypage">Pay</a>
   <a href="/passbook">Passbook</a>
-  <a href="/addMoney">Add money</a></i>
+  <a href="#">Add money</a></i>
 </div>
-  <!-- <script>alert("Welcome to paynum !")</script> -->
+<script>
+  alert("Added Money Succefully !");  
+</script>
+<div class="main">
 
+	<form action="add" method="POST">
+    
+    <input type="number" placeholder="Amount" min="1" max="2000" name="amountAdd" required>
+
+    <input type="submit" value="Add">
+</form>
+
+<form action="pay" method="POST">
+
+
+</form>
+
+
+
+</div>
    
 </body>
 </html> 

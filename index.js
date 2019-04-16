@@ -9,7 +9,7 @@ var connection = require('./config');
 var app = express();
 
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname+'/public'));        // Needed to ope n background image in 'sendFile'
+app.use(express.static(__dirname+'/public'));        // Needed to open background images
 
 var from = 'paynum.group@gmail.com';
 var transporter = nodemailer.createTransport({
@@ -80,7 +80,8 @@ app.post('/pay', function(req, res){
 			res.send("<h1 style=\"color:red\">Sorry, You cannot transfer to your own account!</h1>");
 		}
 		else if(bal >= pay_amount){
-			res.send("Done! Will be available soon");
+            res.send('<h1>Feature will be available soon !</h1>');
+            // res.render('paid', )
 		}
 		else{
 			res.send("<h1>Insufficient Balance</h1>")
@@ -91,6 +92,44 @@ app.post('/pay', function(req, res){
 	}
 });
 
+
+app.get('/addMoney', function(req,res){
+    if(req.session.loggedin) {
+        res.render('add', {username:req.session.username, name:req.session.name});
+    }
+    else{
+        res.send('<h1>Please <a href=\"/login\">login</a> to view this page</h1>');
+    }
+});
+
+
+app.post('/add', function(req, res){
+	if(req.session.loggedin) {
+		var add_amount = req.body.amountAdd;
+        var accnt = req.session.accno;
+		  connection.query("UPDATE users SET Amount = Amount + ? WHERE Account_Number = ?", [add_amount, accnt], function (err, result, fields) {
+	      if(err) {
+	      	res.send("Unable to add Money, please check your internet connection");
+	      }
+	      else {
+            connection.query('INSERT INTO transactions(SENDER, Reciever, amount) VALUES(?, ?, ?)',[accnt, accnt, add_amount], function (error, results, fields) {
+                if(error) {
+                    res.send("Unable to add Money, please check your internet connection");
+                }
+                else {
+                    console.log(result.affectedRows + " record(s) updated");
+                    res.render('added', {name:req.session.name});    
+                }
+            });
+		  }
+  	});
+	}
+	else{
+		res.send('Please <a href=\"/login\">login</a> to view this page');
+	}
+});
+
+
 app.get('/passbook', function(req,res){
 	if(req.session.loggedin) {
 	var bal = req.session.bal;
@@ -98,13 +137,8 @@ app.get('/passbook', function(req,res){
 	var acc = req.session.accno;
 	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
 		
-		if(results.length>0){
 			console.log(results);
 			res.render("passbook", {bal:req.session.bal, myacc:acc,name:req.session.name ,result : results});
-		}
-		else{
-			res.send("<h2>Available Balance = "+ bal+"</h2><br><h2>No transactions are done from/to your account</h2>");
-		}
 		});
 	}
 	else{
@@ -182,7 +216,6 @@ app.post('/auth', function(req, res) {
                req.session.username=username;
                req.session.name = results[0].FName +' '+ results[0].LName;
                req.session.dob = results[0].DOB;
-               // console.log(results[0].DOB);
                req.session.bal = results[0].amount;
                req.session.accno = results[0].Account_Number;
                req.session.email = results[0].E_Mail;
@@ -192,7 +225,6 @@ app.post('/auth', function(req, res) {
                res.redirect('/home');
             }
             else{
-            	// alert('Hello');
 	    		res.send('Username and/or password Incorrect !!!');
             }
         }
