@@ -117,8 +117,10 @@ app.post('/add', function(req, res){
                     res.send("Unable to add Money, please check your internet connection");
                 }
                 else {
+                    req.session.bal = Number(req.session.bal) + Number(add_amount);
+
                     console.log(result.affectedRows + " record(s) updated");
-                    res.render('added', {name:req.session.name});    
+                    res.render('added', {bal:req.session.bal,name:req.session.name});    
                 }
             });
 		  }
@@ -137,7 +139,7 @@ app.get('/passbook', function(req,res){
 	var acc = req.session.accno;
 	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
 		
-			console.log(results);
+			// console.log(results);
 			res.render("passbook", {bal:req.session.bal, myacc:acc,name:req.session.name ,result : results});
 		});
 	}
