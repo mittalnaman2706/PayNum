@@ -164,13 +164,20 @@ app.post('/add', function(req, res){
 
 app.get('/passbook', function(req,res){
 	if(req.session.loggedin) {
-	var bal = req.session.bal;
-	console.log(bal);
 	var acc = req.session.accno;
+	
+	connection.query('SELECT * FROM users WHERE Account_Number = ?',[acc], function (erro, resul, fields) {
+	if(erro) res.send("Network Error !");
+
+	else{		
+	var bal = resul[0].amount;
+	console.log("New bal" + bal);
 	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
 		
-			res.render("passbook", {bal:req.session.bal, myacc:acc,name:req.session.name ,result : results});
+			res.render("passbook", {bal:bal, myacc:acc,name:req.session.name ,result : results});
 		});
+	}
+	});
 	}
 	else
 		res.send('Please <a href=\"/login\">login</a> to view this page');
