@@ -131,7 +131,7 @@ body {
 </div>
 <div class="row header" style="text-align:left;color:red">
 <h3>Current Balance : <%= bal%></h3>
-<h4 style="text-align:right"><u><a href="#">Request Statement</a></u></h4>
+<h4 style="padding-right: 30px ;text-align:right"><u><a href="#">Request Statement</a></u></h4>
 <br>
 </div>
 <table id="myTable" class="table table-striped" >  
@@ -157,13 +157,12 @@ body {
 			q=1;
 		else
 			w=1;
-		<!-- d = d.substr(4, 24); -->
 	%>
 		<tr>
 		<td><%=result[i].TransactionID%></td>
 		<% if(q==2) { %>
 			<td>Added to Wallet</td>
-		<td style="color:green">+<%=result[i].Amount%></td>
+		<td style="color:#4AAC1E">+<%=result[i].Amount%></td>
 
 		<% }
 		else if(w==1) { %>
@@ -172,7 +171,7 @@ body {
 		<% } 
 		else { %> 
 			<td>Received from Acc No. <%=result[i].Reciever%></td>
-		<td style="color:green">+<%=result[i].Amount%></td>
+		<td style="color:#4AAC1E">+<%=result[i].Amount%></td>
 
 		<% } %>
 		<td><%= d %></td>

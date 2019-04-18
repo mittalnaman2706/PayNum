@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,9 +149,11 @@ ul.topnav li.right {float: right;}
             <h3 id="check">Login Form</h3>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
             
-            <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Username" required></div>
+            <div class="form-group"><input class="form-control" type="text" name="username" placeholder="Username" autocomplete="off" readonly 
+    onfocus="this.removeAttribute('readonly');" required></div>
 
-            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" required></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" autocomplete="off" readonly 
+    onfocus="this.removeAttribute('readonly');" required></div>
             <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div><a href="/forgot-pass" class="forgot">Forgot your password</a></form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

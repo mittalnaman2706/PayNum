@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,8 @@ ul.topnav {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  display: block;
+  overflow-x: hidden;
   background-color: #333;
 }
 
@@ -48,7 +50,7 @@ ul.topnav li.right {
   ul.topnav li {float: none;}
 }
 body {
-  /*background: url("images/dashboard.jpg");*/
+  background: url("images/dashboard.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height : 100%;
@@ -81,6 +83,27 @@ body {
   color: #f1f1f1;
 }
 
+.tbl {
+    background-color: #FFFFFF;
+    opacity: 1;
+    margin-left: 300px;
+    margin-top: 200px;
+    width: 300px;
+    /*padding-left: 40px;*/
+    /*border: 1;*/
+}
+
+.btn {
+    color: white;
+    background-color: blue;
+    display: inline-block;
+    border-radius: 8px;
+    padding: 5px 20px;
+    margin-left: 300px;
+    margin-top: 10px;
+  /*background-color: blue;*/
+}
+
 .main {
   margin-left: 200px; /* Same as the width of the sidenav */
 }
@@ -96,6 +119,8 @@ body {
 </head>
 
 <body>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <div>
 <ul class="topnav">
     <li><a class="active" href="#">Paynum</a></li>
@@ -112,16 +137,20 @@ body {
   <a href="/passbook">Passbook</a>
   <a href="#">Add money</a></i>
 </div>
-<script>
-  alert("Added Money Succefully !");  
-</script>
 <div class="main">
 
-	<form action="add" method="POST">
-    
-    <input type="number" placeholder="Amount" min="1" max="2000" name="amountAdd" required>
-
-    <input type="submit" value="Add">
+  <form action="add" method="POST">
+<table class="tbl" border="1" cellpadding="4" cellspacing="1">
+    <tr>
+        <td>
+            Enter amount
+        </td>
+        <td>
+            <input type="number" placeholder="Amount" min="1" max="2000" name="amountAdd" required>
+        </td>
+    </tr>
+</table>
+    <input type="submit" class="btn" value="Add">
 </form>
 
 <form action="pay" method="POST">
@@ -129,7 +158,9 @@ body {
 
 </form>
 
-
+<script>
+  alert("Added Money Succefully !");  
+</script>
 
 </div>
    

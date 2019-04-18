@@ -16,15 +16,16 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '********' 			//Write your password here
+    pass: '*********' 			//Write your password here
   }
 });
 
 var registerController=require('./controllers/register-controller');
  
+app.set('trust proxy', 1)
 app.use(session({
 	secret: 'secret',
-	resave: true,
+	resave: false,
 	saveUninitialized: true
 })); 
 
@@ -39,12 +40,10 @@ app.get('/logout', function(req, res, next) {
 
 
 app.get('/home', function (req, res) {  
-	if(req.session.loggedin) {
+	if(req.session.loggedin) 
 		res.render('home', {name:req.session.name, username:req.session.username});
-	}
-	else{
+	else
 		res.send("<h1>Please <a href=\"/login\">login</a> to view this page</h1>");
-	}
 });  
 
 app.get('/login', function(req,res){
@@ -65,41 +64,75 @@ app.get('/', function(req,res){
 });
 
 app.get('/paypage', function(req, res){
-	if(req.session.loggedin) {
+	if(req.session.loggedin) 
 		res.render('pay', {name:req.session.name, username:req.session.username});
-	}
-	else{
+	else
 		res.send('Please <a href=\"/login\">login</a> to view this page');
-	}
 });
+
 app.post('/pay', function(req, res){
 	if(req.session.loggedin) {
-		var bal = req.session.bal;
-		var pay_amount = req.body.amt;
-		if(req.body.senderno==req.session.accno){
+		var bal = Number(req.session.bal);
+		var pay_amount = Number(req.body.amt);
+		var myacc = Number(req.session.accno);
+		var payto = Number(req.body.senderno);
+		if(myacc == payto){
 			res.send("<h1 style=\"color:red\">Sorry, You cannot transfer to your own account!</h1>");
 		}
 		else if(bal >= pay_amount){
-            res.send('<h1>Feature will be available soon !</h1>');
-            // res.render('paid', )
+
+			var q1 = 'SELECT * FROM users WHERE Account_Number = ?';
+			connection.query(q1,[payto], function (error, results, fields) {
+
+				if(error)
+					res.send("Sorry, no uesr exists with account number - " + payto + '!');
+				
+				else {
+
+					var q2 = "UPDATE users SET Amount = Amount - ? WHERE Account_Number = ?";
+				    connection.query(q2, [pay_amount, myacc], function (err, result, fields) {
+				   		
+				   		if(err)
+				   			res.send("Error, Check your internet connection.\nYour account will be reimbursed if amount is deducted.");
+				   		else {
+				   			 req.session.bal = Number(req.session.bal) - Number(pay_amount);
+                   			 console.log(result.affectedRows + " record(s) updated");
+                   
+							var q3 = "UPDATE users SET Amount = Amount + ? WHERE Account_Number = ?";
+						    connection.query(q3, [pay_amount, payto], function (err, result, fields) {
+
+						    	if(err) 
+						   			res.send("Error, Check your internet connection.\nYour account will be reimbursed if amount is deducted.");
+						   		else {
+                   					console.log(result.affectedRows + " record(s) updated");                   	
+									var q4 = 'INSERT INTO transactions(SENDER, Reciever, amount) VALUES(?, ?, ?)';		
+   								    connection.query(q4,[payto, myacc, pay_amount], function (error, results, fields) {
+	    								if(error) 
+							   				res.send("Error, Check your internet connection.\nYour account will be reimbursed if amount is deducted.");
+							   			else {
+											res.render('home2', {name:req.session.name, username:req.session.username});						   			
+							   		}
+									});
+						   		}
+						    });
+				   		}
+				    });
+				}
+
+			});
 		}
-		else{
+		else
 			res.send("<h1>Insufficient Balance</h1>")
-		}
 	}
-	else{
+	else
 		res.send('Please <a href=\"/login\">login</a> to view this page');
-	}
 });
 
-
 app.get('/addMoney', function(req,res){
-    if(req.session.loggedin) {
+    if(req.session.loggedin) 
         res.render('add', {username:req.session.username, name:req.session.name});
-    }
-    else{
+    else
         res.send('<h1>Please <a href=\"/login\">login</a> to view this page</h1>');
-    }
 });
 
 
@@ -108,14 +141,12 @@ app.post('/add', function(req, res){
 		var add_amount = req.body.amountAdd;
         var accnt = req.session.accno;
 		  connection.query("UPDATE users SET Amount = Amount + ? WHERE Account_Number = ?", [add_amount, accnt], function (err, result, fields) {
-	      if(err) {
+	      if(err) 
 	      	res.send("Unable to add Money, please check your internet connection");
-	      }
 	      else {
             connection.query('INSERT INTO transactions(SENDER, Reciever, amount) VALUES(?, ?, ?)',[accnt, accnt, add_amount], function (error, results, fields) {
-                if(error) {
+                if(error) 
                     res.send("Unable to add Money, please check your internet connection");
-                }
                 else {
                     req.session.bal = Number(req.session.bal) + Number(add_amount);
 
@@ -126,9 +157,8 @@ app.post('/add', function(req, res){
 		  }
   	});
 	}
-	else{
+	else
 		res.send('Please <a href=\"/login\">login</a> to view this page');
-	}
 });
 
 
@@ -139,14 +169,11 @@ app.get('/passbook', function(req,res){
 	var acc = req.session.accno;
 	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
 		
-			// console.log(results);
 			res.render("passbook", {bal:req.session.bal, myacc:acc,name:req.session.name ,result : results});
 		});
 	}
-	else{
+	else
 		res.send('Please <a href=\"/login\">login</a> to view this page');
-	}
-	// res.sendFile('passbook', {name:req.session.name, username:req.session.username});
 });
 
 app.get('/profile', function(req,res){
@@ -156,9 +183,8 @@ app.get('/profile', function(req,res){
 		// console.log(req.session.dob);
 		res.render('profile', {username:req.session.username, phone:req.session.phone, 	dob:date, email:req.session.email, bal:req.session.bal, name:req.session.name, accno:req.session.accno, });	
 	}
-	else{
+	else
 		res.send('Please <a href=\"/login\">login</a> to view this page');
-	}
 });
 
 app.get('/forgot-pass', function(req,res){
@@ -195,11 +221,10 @@ app.post('/forgot', function(req, res) {
 		    console.log('Email sent !');
 		  }
 		});
-		res.send('Your Password has been mailed to <a onclick="myFunction()" href="/">' + EMail + '</a>');
+		res.redirect('login');
 	}	
-	else{
+	else
 		res.send('Wrong Username');
-	}
 	});
 });
 
@@ -226,13 +251,11 @@ app.post('/auth', function(req, res) {
                module.exports.uname = username;
                res.redirect('/home');
             }
-            else{
+            else
 	    		res.send('Username and/or password Incorrect !!!');
-            }
         }
-       	else{
+       	else
     		res.send('Username and/or password Incorrect !!!');
- 	   	}
  	   });
 });
 

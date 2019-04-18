@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>
-Add Money
+  Home
 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -14,8 +14,7 @@ ul.topnav {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  display: block;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: #333;
 }
 
@@ -82,27 +81,6 @@ body {
   color: #f1f1f1;
 }
 
-.tbl {
-    background-color: #FFFFFF;
-    opacity: 1;
-    margin-left: 300px;
-    margin-top: 200px;
-    width: 300px;
-    /*padding-left: 40px;*/
-    /*border: 1;*/
-}
-
-.btn {
-    color: white;
-    background-color: blue;
-    display: inline-block;
-    border-radius: 8px;
-    padding: 5px 20px;
-    margin-left: 300px;
-    margin-top: 10px;
-  /*background-color: blue;*/
-}
-
 .main {
   margin-left: 200px; /* Same as the width of the sidenav */
 }
@@ -118,8 +96,10 @@ body {
 </head>
 
 <body>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<script>
+    alert("Paid successfully !");
+</script>
 <div>
 <ul class="topnav">
     <li><a class="active" href="#">Paynum</a></li>
@@ -134,32 +114,10 @@ body {
   <a href="/profile">Profile</a>
   <a href="/paypage">Pay</a>
   <a href="/passbook">Passbook</a>
-  <a href="#">Add money</a></i>
+  <a href="/addMoney">Add money</a></i>
 </div>
-<div class="main">
+  <!-- <script>alert("Welcome to paynum !")</script> -->
 
-	<form action="add" method="POST">
-<table class="tbl" border="1" cellpadding="4" cellspacing="1">
-    <tr>
-        <td>
-            Enter amount
-        </td>
-        <td>
-            <input type="number" placeholder="Amount" min="1" max="2000" name="amountAdd" required>
-        </td>
-    </tr>
-</table>
-    <input type="submit" class="btn" value="Add">
-</form>
-
-<form action="pay" method="POST">
-
-
-</form>
-
-
-
-</div>
    
 </body>
 </html> 
