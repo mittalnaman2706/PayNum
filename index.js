@@ -16,7 +16,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: 'Paynum@103073' 			//Write your password here
+    pass: '*********' 			//Write your password here
   }
 });
 
@@ -85,9 +85,8 @@ app.post('/pay', function(req, res){
 			connection.query(q1,[payto], function (error, results, fields) {
 
 				if(error)
-					res.send("Error, Check your internet connection.\nYour account will be reimbursed if amount is deducted.");
-				else if(results.length==0)
-					res.send("Sorry, no user exists with account number - " + payto + '!');			
+					res.send("Sorry, no uesr exists with account number - " + payto + '!');
+				
 				else {
 
 					var q2 = "UPDATE users SET Amount = Amount - ? WHERE Account_Number = ?";
@@ -152,21 +151,6 @@ app.post('/add', function(req, res){
                     req.session.bal = Number(req.session.bal) + Number(add_amount);
 
                     console.log(result.affectedRows + " record(s) updated");
-
-                    var mailOptions = {
-						from: from,
-						to: req.session.email,
-						subject: 'NO REPLY-Paynum: Account Credited',
-						html: '<h1>Rs. ' + add_amount + ' added to your account successfully !</h1><h2>\nUpdated balance = Rs. '+req.session.bal+'</h2>'
-						};
-
-						transporter.sendMail(mailOptions, function(eror, info){
-						  if (eror) {
-						    console.log(eror);
-						  } else {
-						    console.log('Email sent !');
-						  }
-					});
                     res.render('added', {bal:req.session.bal,name:req.session.name});    
                 }
             });
@@ -189,7 +173,7 @@ app.get('/passbook', function(req,res){
 	var bal = resul[0].amount;
 	console.log("New bal" + bal);
 	connection.query('SELECT * FROM transactions WHERE Sender = ? or Reciever = ?',[acc, acc], function (error, results, fields) {
-			
+		
 			res.render("passbook", {bal:bal, myacc:acc,name:req.session.name ,result : results});
 		});
 	}
