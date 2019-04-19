@@ -20,7 +20,8 @@ ul.topnav {
 	margin: 0;
 	padding: 0;
 	top :0;
-	/*position: fixed;*/
+	width: 100%; 
+	position: fixed;
 	overflow: hidden;
 	background-color: #333;
 }
@@ -46,8 +47,16 @@ ul.topnav li a.active {
 ul.topnav li.right {
 	font-color :white;
 	font-size :20px;
+	padding-top: 3px;
 	background-color: #000000;
 	float: right;
+}
+
+ul.topnav li.center {
+	color :white;
+	padding-top: 8px;
+	padding-left: 500px;
+	font-size :30px;
 }
 
 @media screen and (max-width: 600px) {
@@ -89,9 +98,9 @@ body {
 }
 
 .main {
+	margin-top: 75px;
 	margin-left: 200px; /* Same as the width of the sidenav */
 }
-
 @media screen and (max-height: 450px) {
 	.sidenav {padding-top: 15px;}
 	.sidenav a {font-size: 18px;}
@@ -110,6 +119,8 @@ body {
 				<li><a class="active" href="#">Paynum</a></li>
 				 
 				<li class="right"><a href="/logout">Logout</a></li>
+				<li class="center">Passbook</li>
+
 			</ul>
 </div>
 </header>
@@ -126,13 +137,10 @@ body {
 		</div>
 <div class="main"> 
 <div class="container">
-<div class="row header" style="text-align:center">
-<h1><u>Passbook</u></h1>
-</div>
 <div class="row header" style="text-align:left;color:red">
 <h3>Current Balance : <%= bal%></h3>
-<h4 style="padding-right: 30px ;text-align:right"><u><a href="#">Request Statement</a></u></h4>
-<br>
+<h4 style="padding-right: 30px;float:right"><u><a href="#">Request Statement</a></u></h4>
+<br><br><br>
 </div>
 <table id="myTable" class="table table-striped" >  
 	<thead>  
@@ -184,7 +192,10 @@ body {
 </body>
 <script>
 $(document).ready(function(){
-		$('#myTable').dataTable();
+		$('#myTable').dataTable({
+			"order": [[ 0, "desc" ]],
+			"lengthMenu": [[5, 10], [5, 10]]
+		});
 });
 </script>
 </html>

@@ -180,12 +180,14 @@ button:hover {
         <td>
             Password:
         </td><td>
-            <input name="password" minlength="8" id="password" placeholder="********" type="password" required>
+            <input name="password" minlength="8" id="password" placeholder="********" type="password" autocomplete="off" readonly 
+    onfocus="this.removeAttribute('readonly');" required>
         </td></tr>
     <tr><td>
             Confirm Password:
         </td><td>
-            <input type="password" placeholder="********" name="confirm_password" id="confirm_password">
+            <input type="password" placeholder="********" name="confirm_password" id="confirm_password" autocomplete="off" readonly 
+    onfocus="this.removeAttribute('readonly');" >
         </td>
     </tr>
 	
