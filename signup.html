@@ -26,7 +26,6 @@ $(function () {
 
 <style>
 body {margin: 0;}
-
 ul.topnav {
   list-style-type: none;
   margin: 0;
@@ -34,9 +33,7 @@ ul.topnav {
   overflow: hidden;
   background-color: #333;
 }
-
 ul.topnav li {float: left;}
-
 ul.topnav li a {
   display: block;
   color: white;
@@ -44,21 +41,17 @@ ul.topnav li a {
   padding: 14px 16px;
   text-decoration: none;
 }
-
 ul.topnav li a:hover:not(.active) {background-color: #111;}
-
 ul.topnav li a.active {
     font-color :white;
     font-size :20px; 
     background-color: #232899;
 }
 ul.topnav li.right {float: right;}
-
 @media screen and (max-width: 600px) {
   ul.topnav li.right, 
   ul.topnav li {float: none;}
 }
-
 #qwe{
   float: right;
   background-color: #FDFFFF;
@@ -67,7 +60,6 @@ ul.topnav li.right {float: right;}
   /*height: 92%;*/
   padding-left: 40px;
 }
-
 body {
   background: url("images/img.jpg");
   background-repeat: no-repeat;
@@ -75,9 +67,7 @@ body {
   height : 100%;
   width : 100%;
 }
-
 input {
-
   width: 100%;
   padding: 1px 1px;
   margin: 7px 1px;
@@ -85,7 +75,6 @@ input {
   border: 1.8px solid #ccc;
   box-sizing: border-box;
 }
-
 button {
   background-color: #4CAF50;
   color: white;
@@ -98,11 +87,9 @@ button {
 button:hover {
   opacity: 0.8;
 }
-
 #btnsubmit {
   background-color: blue;
 }
-
 </style>
 
 <body>  
@@ -133,63 +120,65 @@ button:hover {
 <form action="/controllers/register-controller" method="POST">  
 <table border="1" cellpadding="4" cellspacing="1">
   <u> <i> <h1>Sign Up</h1></i></u>
-	<div id="tble">
+  <div id="tble">
     <tr><td>
-		First Name: 
+    First Name: 
         </td><td>
-		<input type="text" placeholder="Ex. John" name="Fname" required>
+    <input type="text" placeholder="Ex. John" name="Fname" required>
         </td>
     </tr>
     <tr><td>
-		Last Name: 
+    Last Name: 
         </td><td>
-		<input placeholder="Ex. Enfield" type="text" name="Lname" required>
+    <input placeholder="Ex. Enfield" type="text" name="Lname" required>
         </td>
     </tr>
 
     <tr><td>
-		Username: 
+    Username: 
         </td><td>
-		<input type="text" placeholder="Ex. john_123" name="Username" required>
+    <input type="text" placeholder="Ex. john_123" name="Username" required>
         </td>
     </tr>
 
-	<tr><td>
-		E-mail: 
+  <tr><td>
+    E-mail: 
         </td><td>
-		 <input type="email" placeholder="abc@xyz.com" name="email" required>
+     <input type="email" placeholder="abc@xyz.com" name="email" required>
         </td>
     </tr>
 
-	<tr><td>
-		Phone: 
+  <tr><td>
+    Phone: 
         </td><td>
-		 <input placeholder="xxxxxxxxx" type="tel" pattern="\d{10}" name="phone" required>
+     <input placeholder="xxxxxxxxx" type="tel" pattern="\d{10}" name="phone" required>
         </td>
     </tr>
 
     <tr><td>
-		Date of Birth:
-		</td><td>
-	 	<input type="date" data-date-inline-picker="true" placeholder="01/01/2000" name="DOB" required><br>
-	</td>
-	</tr>
+    Date of Birth:
+    </td><td>
+    <input type="date" data-date-inline-picker="true" placeholder="01/01/2000" name="DOB" required><br>
+  </td>
+  </tr>
 
 
     <tr>
         <td>
             Password:
         </td><td>
-            <input name="password" minlength="8" id="password" placeholder="********" type="password" required>
+            <input name="password" minlength="8" id="password" placeholder="********" type="password" autocomplete="off" readonly 
+    onfocus="this.removeAttribute('readonly');" required>
         </td></tr>
     <tr><td>
             Confirm Password:
         </td><td>
-            <input type="password" placeholder="********" name="confirm_password" id="confirm_password">
+            <input type="password" placeholder="********" name="confirm_password" id="confirm_password" autocomplete="off" readonly 
+    onfocus="this.removeAttribute('readonly');" >
         </td>
     </tr>
-	
-</table>	
+  
+</table>  
 <br>
 
 <button type="submit" id="btnsubmit" value="Submit">Register</button>

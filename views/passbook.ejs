@@ -14,19 +14,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {margin: 0;}
-
 ul.topnav {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	top :0;
-	/*position: fixed;*/
+	width: 100%; 
+	position: fixed;
 	overflow: hidden;
 	background-color: #333;
 }
-
 ul.topnav li {float: left;}
-
 ul.topnav li a {
 	display: block;
 	color: white;
@@ -34,22 +32,25 @@ ul.topnav li a {
 	padding: 14px 16px;
 	text-decoration: none;
 }
-
 ul.topnav li a:hover:not(.active) {background-color: #111;}
-
 ul.topnav li a.active {
 	font-color :white;
 	font-size :25px;
 	background-color: #000000;
 }
-
 ul.topnav li.right {
 	font-color :white;
 	font-size :20px;
+	padding-top: 3px;
 	background-color: #000000;
 	float: right;
 }
-
+ul.topnav li.center {
+	color :white;
+	padding-top: 8px;
+	padding-left: 500px;
+	font-size :30px;
+}
 @media screen and (max-width: 600px) {
 	ul.topnav li.right, 
 	ul.topnav li {float: none;}
@@ -62,7 +63,6 @@ body {
 	width : 100%;
 	font-family: "Lato", sans-serif;
 }
-
 .sidenav {
 	height: 100%;
 	width: 180px;
@@ -75,7 +75,6 @@ body {
 	overflow-x: hidden;
 	padding-top: 20px;
 }
-
 .sidenav a {
 	padding: 6px 6px 6px 32px;
 	text-decoration: none;
@@ -83,25 +82,21 @@ body {
 	color: #FFFFFF;
 	display: block;
 }
-
 .sidenav a:hover {
 	color: #f1f1f1;
 }
-
 .main {
+	margin-top: 75px;
 	margin-left: 200px; /* Same as the width of the sidenav */
 }
-
 @media screen and (max-height: 450px) {
 	.sidenav {padding-top: 15px;}
 	.sidenav a {font-size: 18px;}
 }
-
 #nam {
 		font-size: 27px;
 	text-align: center;
 }
-
 </style>
 </head>
 <header>
@@ -110,6 +105,8 @@ body {
 				<li><a class="active" href="#">Paynum</a></li>
 				 
 				<li class="right"><a href="/logout">Logout</a></li>
+				<li class="center">Passbook</li>
+
 			</ul>
 </div>
 </header>
@@ -126,13 +123,10 @@ body {
 		</div>
 <div class="main"> 
 <div class="container">
-<div class="row header" style="text-align:center">
-<h1><u>Passbook</u></h1>
-</div>
 <div class="row header" style="text-align:left;color:red">
 <h3>Current Balance : <%= bal%></h3>
-<h4 style="padding-right: 30px ;text-align:right"><u><a href="#">Request Statement</a></u></h4>
-<br>
+<h4 style="padding-right: 30px;float:right"><u><a href="#">Request Statement</a></u></h4>
+<br><br><br>
 </div>
 <table id="myTable" class="table table-striped" >  
 	<thead>  
@@ -163,7 +157,6 @@ body {
 		<% if(q==2) { %>
 			<td>Added to Wallet</td>
 		<td style="color:#4AAC1E">+<%=result[i].Amount%></td>
-
 		<% }
 		else if(w==1) { %>
 			<td>Sent to Acc No. <%=result[i].Sender%></td>
@@ -172,7 +165,6 @@ body {
 		else { %> 
 			<td>Received from Acc No. <%=result[i].Reciever%></td>
 		<td style="color:#4AAC1E">+<%=result[i].Amount%></td>
-
 		<% } %>
 		<td><%= d %></td>
 	</tr>  
@@ -184,7 +176,10 @@ body {
 </body>
 <script>
 $(document).ready(function(){
-		$('#myTable').dataTable();
+		$('#myTable').dataTable({
+			"order": [[ 0, "desc" ]],
+			"lengthMenu": [[5, 10], [5, 10]]
+		});
 });
 </script>
 </html>
