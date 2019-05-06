@@ -81,6 +81,10 @@ body {
   color: #f1f1f1;
 }
 
+#change {
+  font-size:50px;
+}
+
 .main {
   margin-left: 200px; /* Same as the width of the sidenav */
 }
@@ -96,10 +100,6 @@ body {
 </head>
 
 <body>
-<script>
-    alert("Paid successfully !");
-</script>
-
 <div>
 <ul class="topnav">
     <li><a class="active" href="#">Paynum</a></li>
@@ -116,29 +116,29 @@ body {
   <a href="/passbook">Passbook</a>
   <a href="/addMoney">Add money</a></i>
 </div>
-<div class="main">
-    
-    <div id="contents">
-    <font size = "+5"><b><center>PayNum</center></b></font size>
-    <br>
-    PayNum Online Wallet, A Website with all new and advanced features to manage the details of Account, Transactions, Statement and Feedback.
-    <br>
-    <ul>
-    Essential Features of PayNum are-
-    <br>
-    <br>
-    <li>Easy Account Opening</li>
-    <li>No Minimum Balance</li>
-    <li>Free Online Transaction</li>
-    <li>Free SMS Alert</li>
-    </ul>
-  </div>
-</div>
 
-  <!-- <script>alert("Welcome to paynum !")</script> -->
+<div class="main" id="change">
+<form action="changePass" method="POST">
 
-   
+  <h6> <u>Change Password</u></h6> 
+    <table>
+        <tr>
+            <td>Old Password</td>
+    <td><input type="password" placeholder="*********" name="oldPass" required>
+    </td></tr>
+    <tr>
+    <td>New Password</td>
+    <td><input type="password" placeholder="*********" name="newPass" required>
+    </td>
+    </tr>
+    <tr>
+    <td>Confirm Password</td>
+    <td><input type="password" placeholder="*********" name="confirmPass" required>
+    </td>
+    </tr>
+    </table>
+    <input type="submit" color="blue" value="Submit">
+</form>
+   </div>
 </body>
 </html> 
-
-

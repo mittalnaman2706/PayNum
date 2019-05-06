@@ -11,12 +11,12 @@ var app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+'/public'));        // Needed to open background images
 
-var from = '**************';            //Your Email ID
+var from = 'paynumgroup@gmail.com';            //Your Email ID
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: '**********' 			//Write your password here
+    pass: 'Paynum@103073' 			//Write your password here
   }
 });
 
@@ -46,9 +46,17 @@ app.get('/home', function (req, res) {
 		res.send("<h1>Please <a href=\"/login\">login</a> to view this page</h1>");
 });  
 
+app.get('/changePass', function (req, res) {  
+	if(req.session.loggedin) 
+		res.render('changepass', {name:req.session.name, username:req.session.username});
+	else
+		res.send("<h1>Please <a href=\"/login\">login</a> to view this page</h1>");
+});  
+
 app.get('/login', function(req,res){
-	if(req.session.loggedin)
+	if(req.session.loggedin){
 		req.session.destroy();
+	}
 	res.sendFile(__dirname + '/login.html');
 });
 
