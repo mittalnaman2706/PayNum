@@ -11,12 +11,12 @@ var app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+'/public'));        // Needed to open background images
 
-var from = 'paynumgroup@gmail.com';            //Your Email ID
+var from = '**********';            //Your Email ID
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: 'Paynum@103073' 			//Write your password here
+    pass: '*************' 			//Write your password here
   }
 });
 

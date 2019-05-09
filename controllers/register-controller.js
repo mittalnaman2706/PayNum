@@ -4,12 +4,12 @@ var express=require("express");
 var connection = require('./../config');
 cryptr = new Cryptr('myTotalySecretKey');
  
-var from = 'paynumgroup@gmail.com';            //Your Email ID
+var from = '*********';            //Your Email ID
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: from,
-    pass: 'Paynum@103073'           //Write your password here
+    pass: '***********'           //Write your password here
   }
 });
 

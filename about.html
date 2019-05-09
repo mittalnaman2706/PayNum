@@ -61,7 +61,16 @@ body {
 
 </style>
 </head>
-<body>
+<!-- <HEAD>
+  <SCRIPT type="text/javascript">
+  window.history.forward();
+  function noBack() { window.history.forward(); }
+</SCRIPT>
+</HEAD>
+<BODY onload="noBack();" 
+  onpageshow="if (event.persisted) noBack();" onunload="">
+</BODY>
+ --><body>
 <ul class="topnav">
   <li><a class="active" href="/">Home</a></li>
   <li><a href="#news">News</a></li>
