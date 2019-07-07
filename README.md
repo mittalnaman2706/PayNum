@@ -13,3 +13,5 @@ To run the project follow the steps below :
 * Run the command "node index.js" in command prompt in your project directory
 * If error of uninstalled module, install he module using the command "npm install -g module_name"
 * Your project is ready, Run it as "localhost:3000" on your device or "IP_yourDevice:3000" on other device connected through same WLAN as yours
+
+![Screenshot](./Screenshot.png)
